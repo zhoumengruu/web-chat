@@ -2,9 +2,9 @@ let inputEle = document.getElementsByClassName('chat-input')[0]
 
 let timer
 
-// let originData
+let originData
 
-// getOriginData()                                                                                                                      nData
+getOriginData()                                                                                                                      nData
 
 stopTimer()
 
@@ -38,7 +38,7 @@ inputEle.onkeydown = function (e) {
 
             scrollToBottom()
 
-            // originData = result.contents
+            originData = result.contents
             
           }       
         },
@@ -81,25 +81,6 @@ function renderChat(contents){
     //重新渲染 
   $('.chat-content').html(html)
 
-
-  // contents.filter((timer)=>{
-
-  //   item.createdAT
-
-  //   originData[originData.lengeh - 1].createdAT
-  // })
-
-  // originData=contents
-
-  // if(originData){
-  //   result.contents.filter((item)=>{
-  //     let flag  = moment(originData[originData.length-1].createdAt).isBefore(moment(item.createdAt))
-  //     if(flag){
-  //       originData = result.contents
-  //       alert('新消息提醒')
-  //     }
-  //   })
-  // }
 }
 
 function scrollToBottom(){
@@ -129,17 +110,17 @@ function longPolling(){
       url:'http://localhost:3000/chat/getContent',
       data:{} ,
       success:(result)=>{
-        //   console.log(result)
+          // console.log(result)
         renderChat(result.contents)
-        // if(originData){
-        //   result.contents.filter((item)=>{
-        //     let flag  = moment(originData[originData.length-1].createdAt).isBefore(moment(item.createdAt))
-        //     if(flag){
-        //       originData = result.contents
-        //       alert('您有一条新消息')
-        //     }
-        //   })
-        // }
+        if(originData){
+          result.contents.filter((item)=>{
+            let flag  = moment(originData[originData.length-1].createdAt).isBefore(moment(item.createdAt))
+            if(flag){
+              originData = result.contents
+              alert('您有一条新消息')
+            }
+          })
+        }
       } 
     })
         
